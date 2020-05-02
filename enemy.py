@@ -15,6 +15,7 @@ class Enemy(pygame.sprite.Sprite):
 
         self.cone_angle = 0 #Is in degrees, 90 -> cone is looking up; -90 -> cone is looking down
         self.delta_angle = 1
+        self.counter = 0 #Used for slowing cone sweeping when self.game.slow_time == True
 
         self._update_image(self.original_cone, (0, 50))
 
@@ -61,8 +62,13 @@ class Enemy(pygame.sprite.Sprite):
 
 
     def update(self):
-        self._sweep_cone()
+        if self.game.slow_time and self.counter != 0:
+            print(self.counter)
+            self.counter += 1
+            self.counter = self.counter % 5
+        else:
+            self._sweep_cone
         if self.detect_collision():
-            print("Collision avec le cone")
+            pass
 
-        self.move_character(-1)
+        #self.move_character(-1)
