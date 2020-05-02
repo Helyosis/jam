@@ -5,6 +5,7 @@ from enemy import Enemy
 from block import Block
 from ui import Ui
 from bullet import Bullet
+from laser import Laser
 class Game:
     #timer TODO
     #vie TODO
@@ -31,6 +32,9 @@ class Game:
         
         self.player_character = Player(50, 50, self)
         self.player_character.add(self.all_sprites, self.all_game_objects, self.characters)
+
+        laser =Laser(self)
+        laser.add(self.platforms,self.collide_with_player,self.all_sprites)
 
         floor = Block(x = 0, y = 380, width=800)
         floor.add(self.all_sprites, self.collide_with_player, self.platforms)
@@ -65,8 +69,8 @@ class Game:
             self.all_sprites.update()
             self.all_sprites.draw(self.display)
 
-            for bullet in self.all_sprites:
-                Bullet.mouv_forward(self)
+            #for bullet in self.all_sprites:
+            #Bullet.mouv_forward(self)
 
             #Draw background
             self.display.fill((0,255,0))
