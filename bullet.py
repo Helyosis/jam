@@ -1,22 +1,48 @@
 import pygame
-from enemy import Enemy
-class Bullet(pygame.sprite.Sprite):
-    #def __init__(self, x, y, width, height,speed,direction):
-    def __init__(self):
-        super().__init__()
-        self.width=10
-        self.height=10
-        self.speed=5
-        self.direction=1
-        #self.all_bullets = pygame.sprite.Group()
-        self.image=pygame.image.load("assets/bullet.png")
-        self.image = pygame.transform.scale(self.image, (30, 30)).convert_alpha()
-        self.rect=self.image.get_rect()
-        self.rect.x= Enemy.hitbox.x
-        self.rect.y= Enemy.hitbox.y
+from utils import degrees_to_radian
+import math
 
-        #self.mouv_forward()
-    def launch_bullet(self):
-        self.all_bullets.add(Bullet())
-    def mouv_forward(self):
-        self.rect.x += (self.speed * self.direction)
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, startX, startY, firingAngle, game):
+        """
+        Firing angle is in radian.
+        """
+        super().__init__()
+
+        self.WIDTH = 10
+        self.HEIGHT = 10
+        self.SPEED = 5
+
+        self.game = game
+
+        self.firing_angle = firingAngle
+        self.dx = math.cos(firingAngle) * self.SPEED
+        self.dy = math.sin(firingAngle) * self.SPEED
+
+        self.image=pygame.transform.smoothscale(pygame.image.load("assets/bullet.png"), (self.WIDTH, self.HEIGHT)).convert_alpha()
+
+        self.rect = self.image.get_rect()
+        self.rect.x = startX
+        self.rect.y = startY
+
+
+    def update(self):
+        if self.game.slow_time and self.SPEED == 5:
+            self.SPEED = 1
+            self.dx = math.cos(self.firing_angle) * self.SPEED
+            self.dy = math.sin(self.firing_angle) * self.SPEED
+        elif not self.game.slow_time and self.SPEED == 1:
+            self.SPEED = 5
+            self.dx = math.cos(self.firing_angle) * self.SPEED
+            self.dy = math.sin(self.firing_angle) * self.SPEED
+
+        self.rect.x += self.dx
+        self.rect.y += self.dy
+
+    def force_move(self, dx = 0, dy = 0):
+        """
+        Force the sprite to move. Used by the screen scroller usually.
+        """
+
+        self.rect.x += dx
+        self.rect.y += dy

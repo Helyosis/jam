@@ -102,7 +102,6 @@ class Player(pygame.sprite.Sprite):
 
         self.keys_pressed = [k for k, state in enumerate(keys) if state]
 
-        
 
     def _handle_collision(self, dx, dy):
         colliding_sprites = pygame.sprite.spritecollide(self, self.colliding_with, False, collided)

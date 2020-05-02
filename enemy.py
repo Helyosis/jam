@@ -3,10 +3,11 @@ from utils import collided, rotate
 from math import sqrt
 from bullet import Bullet
 from math import sqrt, ceil
-
+from threading import Thread
+from time import sleep
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, game, ground_sprite,dispaly):
+    def __init__(self, x, y, game, ground_sprite):
         """
         Coordinates provided are relative to the characters. Detection cone is added on the fly
         """
@@ -20,6 +21,7 @@ class Enemy(pygame.sprite.Sprite):
 
         self.character = pygame.transform.smoothscale(pygame.image.load("assets/scientist.png").convert_alpha(), (self.CHAR_WIDTH, self.CHAR_HEIGHT))
         self.original_cone = self.detection_cone = pygame.transform.smoothscale(pygame.image.load("assets/cone.png").convert_alpha(), (self.CONE_WIDTH, self.CONE_HEIGHT))
+
 
         self.cone_angle = 0 #Is in degrees, 90 -> cone is looking up; -90 -> cone is looking down
         self.delta_angle = 1
@@ -37,15 +39,14 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.right = x + self.CHAR_WIDTH
         self.rect.centery = y + self.CHAR_HEIGHT //2 
+        #Very broken but it works
 
-        self.all_bullets = pygame.sprite.Group()
-        self.display=dispaly
     def _update_image(self, new_cone, coordinates):
         """
         Update the position (and angle) of the detection cone.
         coordinates: coordinates relative to the surface
         """
-        self.image = pygame.Surface((self.WIDTH, self.HEIGHT))
+        self.image = pygame.Surface((self.WIDTH, self.HEIGHT), flags=pygame.SRCALPHA)
         self.image.blit(self.character, (self.WIDTH - self.CHAR_WIDTH, (self.HEIGHT // 2) - (self.CHAR_HEIGHT // 2)))
         self.image.blit(new_cone, coordinates)
         self.image.set_colorkey((0,0,0))
@@ -84,10 +85,12 @@ class Enemy(pygame.sprite.Sprite):
         """
         return pygame.sprite.collide_mask(self, self.game.player_character) and not collided(self, self.game.player_character)
 
+    def prepare_to_shoot(self):
+        time.sleep(5)
+
     def fire(self):
-        #bullet=Bullet(self.hitbox.x,self.hitbox.y,10,10,5,2)
-        #bullet.add(self.game.all_sprites,self.game.characters)
-        self.all_bullets.add(Bullet())
+        bullet = Bullet(self.hitbox.x,self.hitbox.y,10,10,5,2)
+        bullet.add(self.game.all_sprites,self.game.characters)
 
     def update(self):
         if self.game.slow_time:
@@ -99,9 +102,8 @@ class Enemy(pygame.sprite.Sprite):
             self._sweep_cone()
 
         if self.detect_collision():
-            self.fire()
-        self.all_bullets.draw(self.display) 
-           
+            shootThread = Thread(target = self.prepare_to_shoot)
+
         if self.rect.right < self.max_x:
             pass
             #self.move_character(1)
