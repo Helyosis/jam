@@ -48,6 +48,17 @@ class Enemy(pygame.sprite.Sprite):
         self.image.blit(new_cone, coordinates)
         self.image.set_colorkey((0,0,0))
 
+    def force_move(self, dx = 0, dy = 0):
+        """
+        Force the sprite to move. Used by the screen scroller usually.
+        """
+
+        self.rect.x += dx
+        self.hitbox.x += dx
+
+        self.rect.y += dy
+        self.hitbox.y += dy
+
     def move_character(self, dx):
         #TODO: Implement gravity
         #TODO: Add animations when walking
