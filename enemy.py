@@ -1,5 +1,5 @@
 import pygame
-from utils import rotate
+from utils import collided, rotate
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, game):
@@ -25,7 +25,12 @@ class Enemy(pygame.sprite.Sprite):
         self.hitbox.x = x + 50
         self.hitbox.y = y + 50
 
-        self.mask = pygame.mask.from_surface(self.character)
+    def move_character(self, dx):
+        #TODO: Implement gravity
+        #TODO: Add animations when walking
+        self.rect.x += dx
+        self.hitbox.x += dx
+
 
     def _update_image(self, new_cone, coordinates):
         """
@@ -44,12 +49,20 @@ class Enemy(pygame.sprite.Sprite):
         if not -75 < self.cone_angle < 75:
             self.delta_angle *= -1
         
-            
         new_cone, coordinates = rotate(self.original_cone, (50, 75), (50, 25), self.cone_angle)
         self._update_image(new_cone, coordinates)
+        self.detection_cone = new_cone
 
-
+    def detect_collision(self):
+        """
+        Detect if cone of Enemy is colliding with Player. If so returns True, else return False
+        """
+        return pygame.sprite.collide_mask(self, self.game.player_character) and not collided(self, self.game.player_character)
 
 
     def update(self):
         self._sweep_cone()
+        if self.detect_collision():
+            print("Collision avec le cone")
+
+        self.move_character(-1)

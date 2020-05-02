@@ -22,8 +22,8 @@ class Game:
         self.collide_with_player = pygame.sprite.Group()
         self.clock = pygame.time.Clock()
         
-        player_character = Player(50, 50, self)
-        player_character.add(self.all_sprites, self.characters)
+        self.player_character = Player(50, 50, self)
+        self.player_character.add(self.all_sprites, self.characters)
 
         floor = Floor(x = 0, y = 380, width=800)
         floor.add(self.all_sprites, self.collide_with_player, self.platforms)
@@ -37,7 +37,7 @@ class Game:
         ui = Ui(self.display, self.width ,self.height,499,190,300,400,'Hey salut à tous les amis,|c\'est DavidLaFargePokémon')
         ui.add(self.all_sprites, self.foreground)
     
-    
+
     def run(self):
         game_launched = True
         while game_launched:
