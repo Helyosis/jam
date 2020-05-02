@@ -33,10 +33,11 @@ class Game:
         platform = Floor(x = 380, y = 300, width=140)
         platform.add(self.all_sprites, self.collide_with_player, self.platforms)
 
-        enemy = Enemy(400, 250, self)
+        enemy = Enemy(400, 250, self, platform)
         enemy.add(self.all_sprites, self.collide_with_player, self.characters)
 
-        ui = Ui(self.display, self.width ,self.height,499,190,300,400,"Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués.")
+        texte = "Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués."
+        ui = Ui(self.display, self.width ,self.height,499,190,300,400, texte)
         ui.add(self.all_sprites, self.foreground)
     
 

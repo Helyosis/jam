@@ -31,14 +31,15 @@ class Ui(pygame.sprite.Sprite):
                 #self.display.blit(text,(0,0))
     def text_t(self):
         self.text_queue=self.text_queue.split(' ')
-        self.text= self.text_queue
+        self.text = list(self.text_queue)
         line=0
+        decallage = 0
         for k in range(len(self.text_queue)):
-            if len(self.text_queue[k])+line<30:
+            if len(self.text_queue[k])+line<25:
                 line+=len(self.text_queue[k])
             else:
-                #print(self.text)
-                self.text.insert(k,'|')
+                self.text.insert(k+decallage,'|')
+                decallage += 1
                 line=0
         self.text_queue=self.text
         self.text_queue=" ".join(self.text_queue)
