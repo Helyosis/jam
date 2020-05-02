@@ -37,8 +37,8 @@ class Game:
         enemy.add(self.all_sprites, self.collide_with_player, self.characters)
 
         texte = "Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués."
-        ui = Ui(self.display, self.width ,self.height,499,190,300,400, texte)
-        ui.add(self.all_sprites, self.foreground)
+        self.ui = Ui(self.display, self.width ,self.height,499,190,300,400, texte)
+        self.ui.add(self.all_sprites, self.foreground)
     
 
     def run(self):

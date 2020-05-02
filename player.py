@@ -46,10 +46,10 @@ class Player(pygame.sprite.Sprite):
     def move_one_axis(self, deltax, deltay):
         if deltax != 0:
             self.rect.x += min(self.MAX_DX, max(-self.MAX_DX, deltax))
-            self.hitbox.x += min(self.MAX_DX, max(-self.MAX_DX, deltax))
+            #self.hitbox.x += min(self.MAX_DX, max(-self.MAX_DX, deltax))
         if deltay != 0:
             self.rect.y += deltay
-            self.hitbox.y += deltay
+            #self.hitbox.y += deltay
 
         self._handle_collision(deltax, deltay)
 
