@@ -72,3 +72,4 @@ class Ui(pygame.sprite.Sprite):
             pygame.draw.rect(self.image, (255,255,255), pygame.Rect(self.x_0,self.y_0, self.width_carre, self.height_carre))
         else:
             self.draw_rate=0
+            

@@ -3,6 +3,9 @@ from utils import collided, rotate
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, game):
+        """
+        Coordinates provided are relative to the characters. Detection cone is added on the fly
+        """
         super().__init__()
         self.game = game
 
@@ -62,12 +65,14 @@ class Enemy(pygame.sprite.Sprite):
 
 
     def update(self):
-        if self.game.slow_time and self.counter != 0:
-            print(self.counter)
+        if self.game.slow_time:
+            if self.counter == 0:
+                self._sweep_cone()
             self.counter += 1
             self.counter = self.counter % 5
         else:
-            self._sweep_cone
+            self._sweep_cone()
+            
         if self.detect_collision():
             pass
 
