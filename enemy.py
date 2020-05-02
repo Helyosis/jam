@@ -4,7 +4,7 @@ from math import sqrt
 from bullet import Bullet
 from math import sqrt, ceil
 from threading import Thread
-from time import sleep
+import time
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, game, ground_sprite):
@@ -75,7 +75,7 @@ class Enemy(pygame.sprite.Sprite):
         if not -75 < self.cone_angle < 75:
             self.delta_angle *= -1
         
-        new_cone, coordinates = rotate(self.original_cone, (self.WIDTH - self.CHAR_WIDTH, self.HEIGHT//2), (self.CONE_WIDTH, self.CONE_HEIGHT//2), self.cone_angle)
+        new_cone, coordinates = rotate(self.cone, (self.WIDTH - self.CHAR_WIDTH, self.HEIGHT//2), (self.CONE_WIDTH, self.CONE_HEIGHT//2), self.cone_angle)
         self._update_image(new_cone, coordinates)
         self.detection_cone = new_cone
 
