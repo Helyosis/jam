@@ -20,9 +20,12 @@ class Player(pygame.sprite.Sprite):
         self.MAX_DX = 5
 
         #self.image = pygame.image.load("player.png").convert_alpha()
-        
-        self.image = pygame.image.load("player.png").convert_alpha()
-        self.image = pygame.transform.scale(self.image, (self.WIDTH, self.HEIGHT))
+        self.images = {
+            "LOOK_RIGHT": pygame.transform.scale(pygame.image.load("player.png").convert_alpha(), (self.WIDTH, self.HEIGHT))
+        }
+        self.images["LOOK_LEFT"] = pygame.transform.flip(self.images["LOOK_RIGHT"], True, False)
+
+        self.image = self.images["LOOK_RIGHT"]
         self.mask = pygame.mask.from_surface(self.image)
         self.image.set_colorkey((0, 0, 0))
 
@@ -48,6 +51,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def _handle_movement(self):
+        new_direction = None
         keys = pygame.key.get_pressed()
         new_keys = [k for k, state in enumerate(keys) if k not in self.keys_pressed and state]
 
@@ -59,12 +63,21 @@ class Player(pygame.sprite.Sprite):
             pass
         
         if pygame.K_RIGHT in new_keys or (keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]):
-            self.direction = 1
+            new_direction = 1
         elif pygame.K_LEFT in new_keys or (keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]):
-            self.direction = -1
-       
+            new_direction = -1
+    
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
-           self.direction = 0
+           new_direction = 0
+        
+        if new_direction is not None and new_direction != self.direction:
+            if new_direction == -1:
+                self.image = self.images["LOOK_LEFT"]
+            if new_direction == 1:
+                self.image = self.images["LOOK_RIGHT"]
+
+        if new_direction is not None:
+            self.direction = new_direction
 
         self.dx += self.speed * self.direction
 
