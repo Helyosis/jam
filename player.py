@@ -51,8 +51,6 @@ class Player(pygame.sprite.Sprite):
             self.hitbox.y += deltay
 
         self._handle_collision(deltax, deltay)
-        
-
 
     def _handle_movement(self):
         new_direction = None

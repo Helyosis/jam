@@ -12,23 +12,31 @@ class Game:
         self.display = display
 
         self.all_sprites = pygame.sprite.Group()
+        self.background = pygame.sprite.Group()
+        self.platforms = pygame.sprite.Group()
+        self.characters = pygame.sprite.Group()
+        self.foreground = pygame.sprite.Group()
+
+        self.layers_list = [self.all_sprites, self.background, self.platforms, self.characters, self.foreground]
+
         self.collide_with_player = pygame.sprite.Group()
         self.clock = pygame.time.Clock()
         
         player_character = Player(50, 50, self)
-        player_character.add(self.all_sprites)
+        player_character.add(self.all_sprites, self.characters)
 
         floor = Floor(x = 0, y = 380, width=800)
-        floor.add(self.all_sprites, self.collide_with_player)
+        floor.add(self.all_sprites, self.collide_with_player, self.platforms)
 
         platform = Floor(x = 380, y = 300, width=140)
-        platform.add(self.all_sprites, self.collide_with_player)
+        platform.add(self.all_sprites, self.collide_with_player, self.platforms)
 
-        enemy = Enemy(400, 250, self)
-        enemy.add(self.all_sprites, self.collide_with_player)
+        enemy = Enemy(400, 200, self)
+        enemy.add(self.all_sprites, self.collide_with_player, self.characters)
 
         ui = Ui(self.display, self.width ,self.height,499,190,300,400,'Hey salut à tous les amis,|c\'est DavidLaFargePokémon')
-        ui.add(self.all_sprites)
+        ui.add(self.all_sprites, self.foreground)
+    
     
     def run(self):
         game_launched = True
@@ -44,8 +52,9 @@ class Game:
             #Draw background
             self.display.fill((0,255,0))
 
-            #Draw sprites
-            self.all_sprites.draw(self.display)
+            #Draw sprites, in respect of their layers
+            for layer in self.layers_list:
+                layer.draw(self.display)
 
             #Refresh display and set FPS to 60
             pygame.display.flip()
