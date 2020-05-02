@@ -1,8 +1,9 @@
 import pygame
+from utils import collided
 import math
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, colliding_with):
+    def __init__(self, x, y, game):
         super().__init__()
 
         self.WIDTH = 50
@@ -31,8 +32,10 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x, y
+        self.hitbox = self.rect
 
-        self.colliding_with = colliding_with
+        self.game = game
+        self.colliding_with = self.game.collide_with_player
 
 
     def move(self, deltax, deltay):
@@ -42,11 +45,13 @@ class Player(pygame.sprite.Sprite):
     def move_one_axis(self, deltax, deltay):
         if deltax != 0:
             self.rect.x += min(self.MAX_DX, max(-self.MAX_DX, deltax))
-            self._handle_collision(deltax, deltay)
-
+            self.hitbox.x += min(self.MAX_DX, max(-self.MAX_DX, deltax))
         if deltay != 0:
             self.rect.y += deltay
-            self._handle_collision(deltax, deltay)
+            self.hitbox.y += deltay
+
+        self._handle_collision(deltax, deltay)
+        
 
 
     def _handle_movement(self):
@@ -85,21 +90,21 @@ class Player(pygame.sprite.Sprite):
         
 
     def _handle_collision(self, dx, dy):
-        colliding_sprites = pygame.sprite.spritecollide(self, self.colliding_with, False, pygame.sprite.collide_mask)
+        colliding_sprites = pygame.sprite.spritecollide(self, self.colliding_with, False, collided)
         for sprite in colliding_sprites:
             if dx > 0 : # Moving right; Hit the left side of the sprite
-                self.rect.right = sprite.rect.left
+                self.rect.right = sprite.hitbox.left
                 self.dx = 0
             if dx < 0: # Moving left; Hit the right side of the sprite
-                self.rect.left = sprite.rect.right
+                self.rect.left = sprite.hitbox.right
                 self.dx = 0
             if dy > 0: # Moving down; Hit the top side of the sprite
-                self.rect.bottom = sprite.rect.top
+                self.rect.bottom = sprite.hitbox.top
                 self.dy = 0
                 self.dx = int(self.dx / 2)
                 self.jump_time = 0
             if dy < 0: # Moving up; Hit the bottom side of the sprite
-                self.rect.top = sprite.rect.bottom
+                self.rect.top = sprite.hitbox.bottom
                 self.dy = 0
         
 

@@ -6,11 +6,11 @@ class Floor(pygame.sprite.Sprite):
         super().__init__()
 
         self.image = pygame.Surface((width, height))
-        self.image.fill(WHITE)
-        self.image.set_colorkey(WHITE)
+        self.image.fill(color)
 
-        pygame.draw.rect(self.image, color, pygame.Rect(0,0, width, height))
+        #pygame.draw.rect(self.image, color, pygame.Rect(0,0, width, height))
 
         self.rect = self.image.get_rect()
         self.rect.y = y
         self.rect.x = x
+        self.hitbox = self.rect

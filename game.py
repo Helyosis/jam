@@ -15,19 +15,19 @@ class Game:
         self.collide_with_player = pygame.sprite.Group()
         self.clock = pygame.time.Clock()
         
-        player_character = Player(50, 50, self.collide_with_player)
+        player_character = Player(50, 50, self)
         player_character.add(self.all_sprites)
 
-        floor = Floor(x = 0, y = 450, width=800)
+        floor = Floor(x = 0, y = 380, width=800)
         floor.add(self.all_sprites, self.collide_with_player)
 
-        platform = Floor(x = 300, y = 500, width = 120)
+        platform = Floor(x = 380, y = 300, width=140)
         platform.add(self.all_sprites, self.collide_with_player)
 
-        scientist = Enemy(x = 320, y = 500)
-        scientist.add(self.all_sprites, self.collide_with_player)
+        enemy = Enemy(400, 250, self)
+        enemy.add(self.all_sprites, self.collide_with_player)
 
-        ui = Ui(self.display, self.width ,self.height,499,190,300,400,'hello  ceci est un super |retour à la ligneeeeee! |cest pas mal mais bon |1 |2 |3 |4 |5')
+        ui = Ui(self.display, self.width ,self.height,499,190,300,400,'Hey salut à tous les amis,|c\'est DavidLaFargePokémon')
         ui.add(self.all_sprites)
     
     def run(self):
@@ -50,3 +50,12 @@ class Game:
             #Refresh display and set FPS to 60
             pygame.display.flip()
             self.clock.tick(60)
+
+if __name__ == "__main__":
+    pygame.init()
+
+    WIDTH, HEIGHT = 800, 600
+
+    display=pygame.display.set_mode((WIDTH,HEIGHT))
+    game = Game(WIDTH, HEIGHT, display)
+    game.run()
