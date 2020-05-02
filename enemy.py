@@ -99,9 +99,16 @@ class Enemy(pygame.sprite.Sprite):
             self._sweep_cone()
 
         if self.detect_collision():
+<<<<<<< HEAD
             self.fire()
         self.all_bullets.draw(self.display) 
            
+=======
+            bullet=Bullet(self.hitbox.x,self.hitbox.y,10,10,5)
+            bullet.add(self.game.all_sprites, self.game.characters)
+            print('RIFEL')
+
+>>>>>>> a930ed24ec8c55c940484653264399ae827ce8d6
         if self.rect.right < self.max_x:
             pass
             #self.move_character(1)

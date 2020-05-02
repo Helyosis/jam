@@ -84,7 +84,7 @@ class Player(pygame.sprite.Sprite):
                 slow_time_thread.start()
 
         if keys[pygame.K_KP6]:
-            self.game.scroll()
+            self.game.scroll(dx = -3)
 
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
            new_direction = 0

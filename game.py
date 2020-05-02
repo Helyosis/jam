@@ -33,7 +33,7 @@ class Game:
         self.player_character.add(self.all_sprites, self.all_game_objects, self.characters)
 
         floor = Block(x = 0, y = 380, width=800)
-        floor.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
+        floor.add(self.all_sprites, self.collide_with_player, self.platforms)
 
         platform = Block(x = 380, y = 300, width=140)
         platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
