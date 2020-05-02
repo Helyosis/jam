@@ -21,6 +21,10 @@ class Ui(pygame.sprite.Sprite):
         pygame.draw.rect(self.image, (255,255,255), pygame.Rect(self.x,self.y, width_carre, height_carre))
         self.draw_rate=0
         self.nbchr=0
+        self.hp='assets/hp1.png'
+        self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (10, 30)).convert_alpha()
+        self.image.blit(self.hp_image,(10,10))
+        self.timer(10000)
     def draw_text(self,display,x,y, width, height,text,width_carre,height_carre):
         if self.text != '':
             font = pygame.font.SysFont(pygame.font.get_default_font(),30)
@@ -35,7 +39,7 @@ class Ui(pygame.sprite.Sprite):
         line=0
         decallage = 0
         for k in range(len(self.text_queue)):
-            if len(self.text_queue[k])+line<25:
+            if len(self.text_queue[k])+line<23:
                 line+=len(self.text_queue[k])
             else:
                 self.text.insert(k+decallage,'|')
@@ -44,6 +48,11 @@ class Ui(pygame.sprite.Sprite):
         self.text_queue=self.text
         self.text_queue=" ".join(self.text_queue)
         self.text_queue=list(self.text_queue)
+    def timer(self,time):
+        time=str(time)
+        font = pygame.font.SysFont(pygame.font.get_default_font(),30)
+        time = font.render(time, 1, (0,0,0))
+        self.image.blit(time,(50,10))
 
     def update(self):
         self.keys = pygame.key.get_pressed()

@@ -6,6 +6,10 @@ from block import Block
 from ui import Ui
 
 class Game:
+    #timer TODO
+    #vie TODO
+    #ralentire la music #TODO
+    
     def __init__(self, width, height, display):
         self.width = width
         self.height = height

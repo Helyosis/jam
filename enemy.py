@@ -1,5 +1,7 @@
 import pygame
 from utils import collided, rotate
+from math import sqrt
+from bullet import Bullet
 from math import sqrt, ceil
 
 class Enemy(pygame.sprite.Sprite):
@@ -80,6 +82,8 @@ class Enemy(pygame.sprite.Sprite):
         """
         return pygame.sprite.collide_mask(self, self.game.player_character) and not collided(self, self.game.player_character)
 
+    def fire(self):
+        pass
 
     def update(self):
         if self.game.slow_time:
@@ -91,7 +95,9 @@ class Enemy(pygame.sprite.Sprite):
             self._sweep_cone()
 
         if self.detect_collision():
-            pass
+            bullet=Bullet(self.hitbox.x,self.hitbox.y,10,10,5)
+            bullet.add(self.game.all_sprites,self.game.characters)
+            print('RIFEL')
 
         if self.rect.right < self.max_x:
             pass
