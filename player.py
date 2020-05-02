@@ -15,13 +15,12 @@ class Player(pygame.sprite.Sprite):
         self.keys_pressed = []
         self.direction = 0
 
-
         self.dx = self.dy = 0
         self.MAX_DX = 5
 
         #self.image = pygame.image.load("player.png").convert_alpha()
         self.images = {
-            "LOOK_RIGHT": pygame.transform.scale(pygame.image.load("player.png").convert_alpha(), (self.WIDTH, self.HEIGHT))
+            "LOOK_RIGHT": pygame.transform.scale(pygame.image.load("assets/player.png").convert_alpha(), (self.WIDTH, self.HEIGHT))
         }
         self.images["LOOK_LEFT"] = pygame.transform.flip(self.images["LOOK_RIGHT"], True, False)
 
@@ -103,13 +102,17 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = sprite.rect.bottom
                 self.dy = 0
         
+
     def _apply_gravity(self):
         self.dy += 1
+
 
     def jump(self, force):
         if self.jump_time == 0:
             self.dy -= force
             self.jump_time += 1
+
+
     def update(self):
         self._handle_movement()
         self._apply_gravity()
