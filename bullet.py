@@ -1,9 +1,5 @@
 import pygame
-<<<<<<< HEAD
 from enemy import Enemy
-=======
-
->>>>>>> a930ed24ec8c55c940484653264399ae827ce8d6
 class Bullet(pygame.sprite.Sprite):
     #def __init__(self, x, y, width, height,speed,direction):
     def __init__(self):
