@@ -1,4 +1,5 @@
 import pygame
+
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height,direction):
         super().__init__()

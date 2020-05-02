@@ -96,7 +96,7 @@ class Enemy(pygame.sprite.Sprite):
 
         if self.detect_collision():
             bullet=Bullet(self.hitbox.x,self.hitbox.y,10,10,5)
-            bullet.add(self.game.all_sprites,self.game.characters)
+            bullet.add(self.game.all_sprites, self.game.characters)
             print('RIFEL')
 
         if self.rect.right < self.max_x:
