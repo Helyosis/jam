@@ -1,6 +1,7 @@
 import pygame
 from utils import collided
 import math
+import threading, time
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, game):
@@ -60,15 +61,20 @@ class Player(pygame.sprite.Sprite):
         if pygame.K_UP in new_keys:
             self.jump(self.jump_initial_speed)
         
-        
         if pygame.K_DOWN in new_keys:
             pass
         
         if pygame.K_RIGHT in new_keys or (keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]):
             new_direction = 1
+
         elif pygame.K_LEFT in new_keys or (keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]):
             new_direction = -1
-    
+
+        if pygame.K_SPACE in new_keys: #TODO: Create config file for keys changes
+            if not self.game.slow_time:
+                slow_time_thread = threading.Thread(target=self.trigger_slow_time, args=(5,))
+                slow_time_thread.start()
+
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
            new_direction = 0
         
@@ -108,6 +114,18 @@ class Player(pygame.sprite.Sprite):
 
     def _apply_gravity(self):
         self.dy += 1
+
+    def trigger_slow_time(self, duration):
+        """
+        Triggers the slowing time power of the Player. It slow every other objets (enemy, lasers, moving platforms...)
+        The effect last for durations seconds. Must run in a separate thread to not block other processes
+        duration: duration of the time slowing effect
+        """
+        self.game.slow_time = True
+        print("Le ralentissement commence.")
+        time.sleep(duration)
+        self.game.slow_time = False
+        print("Le temps reprends normalement.")
 
 
     def jump(self, force):

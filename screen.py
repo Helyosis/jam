@@ -50,6 +50,7 @@ class Screen(object):
                     self.menu_launched = False
                     pygame.quit()
                 pygame.display.flip()
+                
 #------------------------------------------------------------
 Screen(800,600)
 
