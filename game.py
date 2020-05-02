@@ -6,6 +6,9 @@ from floor import Floor
 from ui import Ui
 
 class Game:
+    #timer TODO
+    #vie TODO
+    #ralentire la music #TODO
     def __init__(self, width, height, display):
         self.width = width
         self.height = height
@@ -34,7 +37,7 @@ class Game:
         enemy = Enemy(400, 200, self)
         enemy.add(self.all_sprites, self.collide_with_player, self.characters)
 
-        ui = Ui(self.display, self.width ,self.height,499,190,300,400,'Hey salut à tous les amis,|c\'est DavidLaFargePokémon')
+        ui = Ui(self.display, self.width ,self.height,499,190,300,400,'Je crois que les filles m\'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués.')
         ui.add(self.all_sprites, self.foreground)
     
 
