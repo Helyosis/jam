@@ -4,7 +4,7 @@ from player import Player
 from enemy import Enemy
 from block import Block
 from ui import Ui
-
+from bullet import Bullet
 class Game:
     #timer TODO
     #vie TODO
@@ -38,7 +38,7 @@ class Game:
         platform = Block(x = 380, y = 300, width=140)
         platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
-        enemy = Enemy(400, 250, self, platform)
+        enemy = Enemy(400, 250, self, platform,self.display)
         enemy.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.characters)
 
         texte = "Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués."
@@ -63,6 +63,10 @@ class Game:
 
             #Game logic
             self.all_sprites.update()
+            self.all_sprites.draw(self.display)
+
+            for bullet in self.all_sprites:
+                Bullet.mouv_forward(self)
 
             #Draw background
             self.display.fill((0,255,0))

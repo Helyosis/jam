@@ -4,8 +4,9 @@ from math import sqrt
 from bullet import Bullet
 from math import sqrt, ceil
 
+
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, game, ground_sprite):
+    def __init__(self, x, y, game, ground_sprite,dispaly):
         """
         Coordinates provided are relative to the characters. Detection cone is added on the fly
         """
@@ -37,7 +38,8 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.right = x + self.CHAR_WIDTH
         self.rect.centery = y + self.CHAR_HEIGHT //2 
 
-
+        self.all_bullets = pygame.sprite.Group()
+        self.display=dispaly
     def _update_image(self, new_cone, coordinates):
         """
         Update the position (and angle) of the detection cone.
@@ -83,7 +85,9 @@ class Enemy(pygame.sprite.Sprite):
         return pygame.sprite.collide_mask(self, self.game.player_character) and not collided(self, self.game.player_character)
 
     def fire(self):
-        pass
+        #bullet=Bullet(self.hitbox.x,self.hitbox.y,10,10,5,2)
+        #bullet.add(self.game.all_sprites,self.game.characters)
+        self.all_bullets.add(Bullet())
 
     def update(self):
         if self.game.slow_time:
@@ -95,10 +99,9 @@ class Enemy(pygame.sprite.Sprite):
             self._sweep_cone()
 
         if self.detect_collision():
-            bullet=Bullet(self.hitbox.x,self.hitbox.y,10,10,5)
-            bullet.add(self.game.all_sprites,self.game.characters)
-            print('RIFEL')
-
+            self.fire()
+        self.all_bullets.draw(self.display) 
+           
         if self.rect.right < self.max_x:
             pass
             #self.move_character(1)
