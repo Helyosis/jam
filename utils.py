@@ -1,4 +1,5 @@
 import pygame
+from math import pi
 
 def collided(sprite, other):
     return sprite.hitbox.colliderect(other.hitbox)
@@ -32,3 +33,9 @@ def rotate(image, pos, originPos, angle):
     rotated_image = pygame.transform.rotate(image, angle)
 
     return rotated_image, origin
+
+def degrees_to_radian(val):
+    """
+    Convert a angle of val degrees to an angle in a radians.
+    """
+    return val * (pi / 180)

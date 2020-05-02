@@ -23,9 +23,10 @@ class Game:
         self.background = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
         self.characters = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
         self.foreground = pygame.sprite.Group()
 
-        self.layers_list = [self.all_sprites, self.background, self.platforms, self.characters, self.foreground]
+        self.layers_list = [self.all_sprites, self.background, self.platforms, self.characters, self.bullets, self.foreground]
 
         self.collide_with_player = pygame.sprite.Group()
         self.clock = pygame.time.Clock()
@@ -42,7 +43,8 @@ class Game:
         platform = Block(x = 380, y = 300, width=140)
         platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
-        enemy = Enemy(400, 250, self, platform,self.display)
+
+        enemy = Enemy(400, 250, self, platform)
         enemy.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.characters)
 
         texte = "Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués."
@@ -69,9 +71,12 @@ class Game:
             self.all_sprites.update()
             self.all_sprites.draw(self.display)
 
+<<<<<<< HEAD
             #for bullet in self.all_sprites:
             #Bullet.mouv_forward(self)
 
+=======
+>>>>>>> e55709da8560b734dad9719aba3bdb10272b4e9b
             #Draw background
             self.display.fill((0,255,0))
 
