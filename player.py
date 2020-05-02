@@ -43,6 +43,14 @@ class Player(pygame.sprite.Sprite):
         self.move_one_axis(deltax, 0)
         self.move_one_axis(0, deltay)
 
+    def force_move(self, dx = 0, dy = 0):
+        """
+        Force the sprite to move with no regards to collisions. Used by the screen scroller usually.
+        """
+
+        self.rect.x += dx
+        self.rect.y += dy
+
     def move_one_axis(self, deltax, deltay):
         if deltax != 0:
             self.rect.x += min(self.MAX_DX, max(-self.MAX_DX, deltax))
@@ -74,6 +82,9 @@ class Player(pygame.sprite.Sprite):
             if not self.game.slow_time:
                 slow_time_thread = threading.Thread(target=self.trigger_slow_time, args=(5,))
                 slow_time_thread.start()
+
+        if keys[pygame.K_KP6]:
+            self.game.scroll()
 
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
            new_direction = 0
