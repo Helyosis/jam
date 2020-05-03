@@ -37,7 +37,7 @@ class Screen(object):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if super_boutton.clic(mouse_pos):
                         self.menu_launched=False
-                        #menu_song.stop()
+                        menu_song.stop()
                         self.game_launched=True
                         
                 if event.type == pygame.MOUSEMOTION:
