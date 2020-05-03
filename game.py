@@ -94,7 +94,7 @@ class Game:
         #1
         self.add_block_wrapper(0, 200, width = 100)
         self.add_enemy_wrapper(50, 250, aiming_time = 5)
-        self.add_coin(100, )
+
 
         self.add_block_wrapper(900, 150, 40, 119)
 
@@ -171,7 +171,7 @@ class Game:
         time.sleep(2)
         self.game_launched=False
     def victory(self):
-        self.display(self.game_victoire_image,(0,0))
+        self.display.blit(self.game_victoire_image,(0,0))
         time.sleep(2)
         self.game_launched=False
 if __name__ == "__main__":
