@@ -166,7 +166,7 @@ class Player(pygame.sprite.Sprite):
                 self.game.ui.print("Oh nan :( Te voilà décédé maintenant.")
                 self.dx = self.dy =  0
                 self.is_dead = True
-                self.game.game_over()
+                #self.game.game_over()
 
     def update(self):
         if not self.is_dead:

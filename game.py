@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 from player import Player
 from enemy import Enemy
@@ -9,6 +10,7 @@ from laser import Laser
 import threading, time
 from laser import LaserShooter
 from coin import Coin
+
 class Game:
     #ralentire la music #TODO
     
@@ -59,8 +61,8 @@ class Game:
 
         self.fond_image=pygame.transform.scale(pygame.image.load("assets/fond.png"), (800, 350)).convert_alpha()
 
-        self.game_over_image=pygame.transform.scale(pygame.image.load("assets/gameover.png"), (800, 600)).convert_alpha()
-        self.game_victoire_image=pygame.transform.scale(pygame.image.load("assets/victory.png"), (800, 600)).convert_alpha()
+        self.game_over_image=pygame.transform.scale(pygame.image.load("assets/gameover.png"), (800, 600)).convert()
+        self.game_victoire_image=pygame.transform.scale(pygame.image.load("assets/victory.png"), (800, 600)).convert()
 
     def initialize_level(self):
         left_border = Block(x = -20, y = -3000, height = 3000 + self.FLOOR_Y_LEVEL, game =self)
@@ -131,11 +133,11 @@ class Game:
         self.add_coin_wrapper(self.MAX_X - 150, 150)
 
         #4
-        path = [(0, 1) for _ in range(0,200)] + [(0, -1) for _ in range(0, 200)]
-        self.add_block_wrapper(2750, 600, 100, 80, texture = (255, 255, 0), path = path)
-        self.add_block_wrapper(2850, 800, self.MAX_X - 2850, 80)
-        self.add_laser_wrapper(2960, 900, "DOWN", max_length=100)
-
+        path = [(0, 1) for _ in range(0,500)] + [(0, -1) for _ in range(0, 500)]
+        self.add_block_wrapper(1650, 1200, 300, 80, texture = (255, 255, 0), path = path)
+        self.add_block_wrapper(1950, 1200, self.MAX_X - 2850, 80)
+        #self.add_laser_wrapper(2050, 1300, "DOWN", max_length=100)
+        self.add_coin_wrapper(1800 - 150, 1200 + 250)
 
         
 
@@ -155,6 +157,7 @@ class Game:
 
     def add_laser_wrapper(self, x, y, direction, max_length = 71, cooldown = 5 * 60):
         laser = LaserShooter(x = x, y = y, game= self, direction = direction, max_length=max_length, damage = 1, cooldown=cooldown)
+        laser.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
     def scroll(self, dx = -1, dy = 0):
         """
@@ -175,9 +178,15 @@ class Game:
             #if pygame.event.get(pygame.MOUSEMOTION):
             #print(pygame.mouse.get_pos())
             if pygame.event.get(pygame.QUIT):
-                game_launched=False
-            if self.score>=6:
-                self.victory()
+                sys.exit(0)
+            
+            if self.player_character.is_dead:
+                self.display.blit(self.game_over_image,(0,0))
+                break
+
+            if self.score>=4:
+                self.display.blit(self.game_victoire_image,(0,0))
+                break
             #Game logic
             self.all_sprites.update()
             self.all_sprites.draw(self.display)
@@ -211,13 +220,14 @@ class Game:
         self.game_song_slow.stop()
         self.game_song.play(-1,0,1000).set_volume(0.3)#int(pos/1.5),2
     def game_over(self):
-        self.display.blit(self.game_over_image,(100,100))
-        time.sleep(2)
         self.game_launched=False
+        
+
     def victory(self):
-        self.display.blit(self.game_victoire_image,(0,0))
-        time.sleep(2)
         self.game_launched=False
+        
+        time.sleep(60)
+        
 if __name__ == "__main__":
     pygame.init()
 
