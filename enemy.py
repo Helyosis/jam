@@ -18,7 +18,7 @@ class Enemy(pygame.sprite.Sprite):
         self.TUBE_WIDTH, self.TUBE_HEIGHT = self.CONE_WIDTH, 10
         self.WIDTH, self.HEIGHT = ceil(sqrt(self.CONE_WIDTH ** 2 + (self.CONE_HEIGHT / 2) ** 2) + 50), 2*self.CONE_WIDTH
 
-        self.character = pygame.transform.smoothscale(pygame.image.load("assets/scientist.png").convert_alpha(), (self.CHAR_WIDTH, self.CHAR_HEIGHT))
+        self.character = pygame.transform.flip(pygame.transform.smoothscale(pygame.image.load("assets/enemy.png").convert_alpha(), (self.CHAR_WIDTH, self.CHAR_HEIGHT)), True, False)
         self.original_cone = self.cone = self.detection_cone = pygame.transform.smoothscale(pygame.image.load("assets/cone.png").convert_alpha(), (self.CONE_WIDTH, self.CONE_HEIGHT))
         self.tube = pygame.transform.smoothscale(pygame.image.load("assets/tube.png").convert_alpha(), (self.TUBE_WIDTH, self.TUBE_HEIGHT))
 

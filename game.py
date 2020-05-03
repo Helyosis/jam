@@ -39,9 +39,6 @@ class Game:
         self.player_character = Player(50, 50, self)
         self.player_character.add(self.all_sprites, self.all_game_objects, self.characters)
 
-        floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
-        floor.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
-
         platform = Block(x = 380, y = 300, width=140, game = self)
         platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
@@ -69,6 +66,10 @@ class Game:
         self.ui = Ui(self.display, self.width ,self.height,499,190,300,400, texte, self)
         self.ui.add(self.all_sprites, self.foreground)
     
+    def initialize_level(self):
+        floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
+        floor.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
+
     def scroll(self, dx = -1, dy = 0):
         """
         Move all sprites belonging to self.all_game_objects Group by applying their function force_move(dx)

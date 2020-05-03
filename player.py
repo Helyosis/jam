@@ -2,6 +2,7 @@ import pygame
 from utils import collided
 import math
 import threading, time
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, game):
         super().__init__()
@@ -18,17 +19,20 @@ class Player(pygame.sprite.Sprite):
         self.MAX_JUMP_TIME = 20
         self.keys_pressed = []
         self.direction = 0
+        self.is_running = False
 
         self.dx = self.dy = 0
         self.MAX_DX = 5
 
         #self.image = pygame.image.load("player.png").convert_alpha()
         self.images = {
-            "LOOK_RIGHT": pygame.transform.scale(pygame.image.load("assets/player.png").convert_alpha(), (self.WIDTH, self.HEIGHT))
+            "LOOK_RIGHT": pygame.transform.scale(pygame.image.load("assets/idle.png").convert_alpha(), (self.WIDTH, self.HEIGHT)),
+            "RUNNING": [pygame.transform.scale(pygame.image.load(f"assets/run2.{i}.png").convert_alpha(), (self.WIDTH, self.HEIGHT)) for i in range(1, 8)]
         }
         self.images["LOOK_LEFT"] = pygame.transform.flip(self.images["LOOK_RIGHT"], True, False)
 
         self.image = self.images["LOOK_RIGHT"]
+        self.image_index = 0
         self.mask = pygame.mask.from_surface(self.image)
         self.image.set_colorkey((0, 0, 0))
 
@@ -95,12 +99,9 @@ class Player(pygame.sprite.Sprite):
 
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
            new_direction = 0
-        
-        if new_direction is not None and new_direction != self.direction:
-            if new_direction == -1:
-                self.image = self.images["LOOK_LEFT"]
-            if new_direction == 1:
-                self.image = self.images["LOOK_RIGHT"]
+           self.is_running = False
+        else:
+            self.is_running = True
 
         if new_direction is not None:
             self.direction = new_direction
@@ -174,6 +175,16 @@ class Player(pygame.sprite.Sprite):
 
         if self.rect.bottom > 400:
             self.damage(3)
+
+        if self.is_running:
+            self.image_index += 1
+            new_image = self.images["RUNNING"][self.image_index % 7]
+            if self.direction < 0:
+                new_image = pygame.transform.flip(new_image, True, False)
+            self.image = new_image
+        else:
+            self.image = self.images["LOOK_LEFT"] if self.direction < 0 else self.images["LOOK_RIGHT"]
+
 
         self.move(self.dx, self.dy)
 
