@@ -61,7 +61,7 @@ class Game:
         enemy = Enemy(400, 250, self, platform)
         enemy.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.characters)
 
-        laser_shooter = LaserShooter(1400, 360, self, "UP")
+        laser_shooter = LaserShooter(1400, 360, self, "UP", 10)
         laser_shooter.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
         #texte = "Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués."
