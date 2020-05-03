@@ -89,15 +89,45 @@ class Game:
         #1
         self.add_block_wrapper(0, 200, width = 100)
         self.add_enemy_wrapper(50, 250, aiming_time = 5)
-        self.add_coin(100, )
+        self.add_coin_wrapper(150, 175)
 
-        self.add_block_wrapper(900, 150, 40, 119)
+        #2
+        self.add_block_wrapper(900, 150, 80, 150-71)
+        self.add_block_wrapper(900, 71, width = 80, height = 71, fake = True)
+        self.add_block_wrapper(1000, 250, 80, 250-71)
+        self.add_block_wrapper(1000, 71, 80, 71, fake = True)
+        self.add_block_wrapper(1100, 350, 80, 350-71)
+        self.add_block_wrapper(1100, 71, 80, 71, fake = True)
+        self.add_block_wrapper(1200, 450, 80, 450-71)
+        self.add_block_wrapper(1200, 71, 80, 71, fake = True)
+        self.add_block_wrapper(1300, 600, 80, 600-71)
+        self.add_block_wrapper(1300, 71, 80, 71, fake = True)
+
+        #2.5
+        self.add_block_wrapper(1300, 600, 900, 40)
+        self.add_block_wrapper(1300 + 900, 600, 100, 40, fake = True)
+        self.add_coin_wrapper()
+
+        #3
+        self.add_block_wrapper(2300, 600, 80, 600-71)
+        self.add_block_wrapper(2300, 71,  80, 71, fake = True)
+        self.add_block_wrapper(2400, 450, 80, 450-71)
+        self.add_block_wrapper(2400, 71, 80, 71, fake = True)
+        self.add_block_wrapper(2500, 350, 80, 350-71)
+        self.add_block_wrapper(2500, 71, 80, 71, fake = True)
+        self.add_block_wrapper(2600, 250, 80, 250-71)
+        self.add_block_wrapper(2600, 71, 80, 71, fake = True)
+        self.add_block_wrapper(2700, 150, 80, 150-71)
+        self.add_block_wrapper(2700, 71, 80, 71, fake = True)
+
 
         
 
-    def add_block_wrapper(self, x, y, width = 20, height = 20, texture = (255, 255, 255), path = ()):
+    def add_block_wrapper(self, x, y, width = 20, height = 20, texture = (255, 255, 255), path = (), fake = False):
         platform = Block(x = x, y = self.FLOOR_Y_LEVEL - y, width=width, height = height, game = self, texture=texture, path = path)
-        platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
+        platform.add(self.all_sprites, self.all_game_objects, self.platforms)
+        if not fake:
+            platform.add(self.collide_with_player)
 
     def add_enemy_wrapper(self, x, y, aiming_time = 2):
         enemy = Enemy(x=x, y=self.FLOOR_Y_LEVEL - y, game=self, aiming_time=aiming_time*60)
