@@ -2,7 +2,6 @@ import pygame
 from utils import collided
 import math
 import threading, time
-
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, game):
         super().__init__()
@@ -180,3 +179,4 @@ class Player(pygame.sprite.Sprite):
 
         if self.game.slow_time >= 0:
             self.game.slow_time -= 1
+            self.game.ui.timer(self.game.slow_time)

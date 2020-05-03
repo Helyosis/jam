@@ -28,6 +28,7 @@ class Ui(pygame.sprite.Sprite):
         self.hp='assets/hp3.png'
         self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert()
         self.image.blit(self.hp_image,(10,10))
+        self.time_rate =0
         #self.timer(10000)
     def draw_text(self,display,x,y, width, height,text,width_carre,height_carre):
         if self.text != '':
@@ -40,8 +41,7 @@ class Ui(pygame.sprite.Sprite):
     def print_hp(self, hp):
         if hp>=0:
             self.hp='assets/hp'+str(hp)+'.png'
-            pygame.draw.rect(self.image, (255, 255, 255), [0, 0, 160, 60])
-            self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert()
+            self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert_alpha()
             self.image.blit(self.hp_image,(10,10)) 
 
     def text_t(self):
@@ -62,10 +62,15 @@ class Ui(pygame.sprite.Sprite):
 
 
     def timer(self,time):
-        time = str(time)
-        font = pygame.font.SysFont(pygame.font.get_default_font(),30)
-        time = font.render(time, 1, (0,0,0))
-        self.image.blit(time,(50,10))
+        if self.time_rate ==0:
+            time = 'Time :'+str(time)
+            font = pygame.font.SysFont(pygame.font.get_default_font(),30)
+            time = font.render(time, 1, (0,0,0))
+            pygame.draw.rect(self.image, (255,255,255), pygame.Rect(200,25, 120, 20))
+            self.image.blit(time,(200,25))
+            self.timer_rate=1
+        else:
+            self.timer_rate=0
 
     def update(self):
         self.keys = pygame.key.get_pressed()
@@ -94,9 +99,6 @@ class Ui(pygame.sprite.Sprite):
         else:
             self.draw_rate=0
 
-        if self.game.slow_time >= 0:
-            pass #J'ai cassé un truc sans faire exprès ?
-            #self.time
 
     def print(self, text_to_print, end = NEWLINE, clear = False):
         """

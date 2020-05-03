@@ -7,8 +7,6 @@ from ui import Ui
 from bullet import Bullet
 from laser import LaserShooter
 class Game:
-    #timer TODO
-    #vie TODO
     #ralentire la music #TODO
     
     def __init__(self, width, height, display):
