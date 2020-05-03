@@ -3,19 +3,19 @@ class Coin(pygame.sprite.Sprite):
     def __init__(self,x,y, game):
         super().__init__()
 
-        self.game=game
-        self.WIDTH = 50
-        self.HEIGHT = 50
+        self.game = game
+        self.WIDTH = 150
+        self.HEIGHT = 150
         self.image=pygame.transform.smoothscale(pygame.image.load("assets/coin.png"), (self.WIDTH, self.HEIGHT)).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.hitbox = self.rect
 
-    def collision(self):
+    def update(self):
         colliding_sprites = pygame.sprite.collide_mask(self, self.game.player_character)
         if colliding_sprites:
-            self.game.coin+=1
+            self.game.score += 1
             self.kill()
             del self
     
