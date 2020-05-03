@@ -8,6 +8,7 @@ from bullet import Bullet
 from laser import Laser
 import threading, time
 from laser import LaserShooter
+from coin import Coin
 class Game:
     #ralentire la music #TODO
     
@@ -51,6 +52,8 @@ class Game:
         self.game_song_slow= pygame.mixer.Sound("assets/music1.wav")
         self.game_song= pygame.mixer.Sound("assets/music0.wav")
         self.music()
+        self.score=0
+        Coin(100,100,self)
 
     def initialize_level(self):
         floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
