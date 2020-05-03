@@ -53,7 +53,8 @@ class Game:
         self.game_song= pygame.mixer.Sound("assets/music0.wav")
         self.music()
         self.score=0
-        Coin(100,100,self)
+        coin = Coin(100,100,self)
+        coin.add(self.all_sprites, self.all_game_objects, self.projectiles)
 
     def initialize_level(self):
         floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
