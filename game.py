@@ -34,8 +34,8 @@ class Game:
         self.player_character = Player(50, 50, self)
         self.player_character.add(self.all_sprites, self.all_game_objects, self.characters)
 
-        laser =Laser(300, 300, self)
-        #laser.add(self.platforms,self.collide_with_player,self.all_sprites)
+        laser = Laser(300, 360, self)
+        laser.add(self.platforms, self.all_game_objects, self.collide_with_player, self.all_sprites)
 
         floor = Block(x = 0, y = 380, width=800)
         floor.add(self.all_sprites, self.collide_with_player, self.platforms)

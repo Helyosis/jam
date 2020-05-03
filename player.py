@@ -147,11 +147,12 @@ class Player(pygame.sprite.Sprite):
             self.jump_time += 1
 
     def damage(self, n):
-        self.remaining_health -= n
-        self.game.ui.print(f"OUCH ! -{n} dégats")
-        if self.remaining_health <= 0:
-            self.game.ui.print("Oh nan :( Te voilà décédé maintenant.")
-            self.is_dead = True
+        if n > 0:
+            self.remaining_health -= n
+            self.game.ui.print(f"OUCH ! -{n} dégats")
+            if self.remaining_health <= 0:
+                self.game.ui.print("Oh nan :( Te voilà décédé maintenant.")
+                self.is_dead = True
 
 
     def update(self):
