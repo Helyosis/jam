@@ -12,11 +12,12 @@ class Bullet(pygame.sprite.Sprite):
         self.WIDTH = 10
         self.HEIGHT = 10
         self.SPEED = 5
+        self.DAMAGE = 1
 
         self.game = game
 
         self.firing_angle = firingAngle
-        self.dx = math.cos(firingAngle) * self.SPEED
+        self.dx = math.cos(firingAngle) * self.SPEED * -1
         self.dy = math.sin(firingAngle) * self.SPEED
 
         self.image=pygame.transform.smoothscale(pygame.image.load("assets/bullet.png"), (self.WIDTH, self.HEIGHT)).convert_alpha()
@@ -25,24 +26,27 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.x = startX
         self.rect.y = startY
 
-
     def update(self):
         if self.game.slow_time and self.SPEED == 5:
             self.SPEED = 1
-            self.dx = math.cos(self.firing_angle) * self.SPEED
+            self.dx = math.cos(self.firing_angle) * self.SPEED * -1
             self.dy = math.sin(self.firing_angle) * self.SPEED
         elif not self.game.slow_time and self.SPEED == 1:
             self.SPEED = 5
-            self.dx = math.cos(self.firing_angle) * self.SPEED
+            self.dx = math.cos(self.firing_angle) * self.SPEED * -1
             self.dy = math.sin(self.firing_angle) * self.SPEED
 
         self.rect.x += self.dx
         self.rect.y += self.dy
 
+        if pygame.sprite.collide_rect(self, self.game.player_character):
+            self.game.player_character.damage(self.DAMAGE)
+            self.kill() #Remove from all groups
+            del self
+
     def force_move(self, dx = 0, dy = 0):
         """
         Force the sprite to move. Used by the screen scroller usually.
         """
-
         self.rect.x += dx
         self.rect.y += dy

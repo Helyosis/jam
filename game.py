@@ -16,7 +16,7 @@ class Game:
         self.height = height
         self.display = display
 
-        self.slow_time = False
+        self.slow_time = -1
 
         self.all_sprites = pygame.sprite.Group()
         self.all_game_objects = pygame.sprite.Group()
@@ -35,7 +35,7 @@ class Game:
         self.player_character.add(self.all_sprites, self.all_game_objects, self.characters)
 
         laser =Laser(self)
-        laser.add(self.platforms,self.collide_with_player,self.all_sprites)
+        #laser.add(self.platforms,self.collide_with_player,self.all_sprites)
 
         floor = Block(x = 0, y = 380, width=800)
         floor.add(self.all_sprites, self.collide_with_player, self.platforms)
@@ -47,8 +47,9 @@ class Game:
         enemy = Enemy(400, 250, self, platform)
         enemy.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.characters)
 
-        texte = "Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués."
-        self.ui = Ui(self.display, self.width ,self.height,499,190,300,400, texte)
+        #texte = "Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués."
+        texte = "Bonjour. Bonne chance"
+        self.ui = Ui(self.display, self.width ,self.height,499,190,300,400, texte, self)
         self.ui.add(self.all_sprites, self.foreground)
     
     def scroll(self, dx = -1, dy = 0):
@@ -71,12 +72,6 @@ class Game:
             self.all_sprites.update()
             self.all_sprites.draw(self.display)
 
-<<<<<<< HEAD
-            #for bullet in self.all_sprites:
-            #Bullet.mouv_forward(self)
-
-=======
->>>>>>> e55709da8560b734dad9719aba3bdb10272b4e9b
             #Draw background
             self.display.fill((0,255,0))
 

@@ -1,6 +1,9 @@
 import pygame
+
+NEWLINE = '|'
+
 class Ui(pygame.sprite.Sprite):
-    def __init__(self,display, width , height,width_carre,height_carre, x, y,text):
+    def __init__(self,display, width , height,width_carre,height_carre, x, y,text, game):
         super().__init__()
         self.display=display
         self.width=width
@@ -12,6 +15,7 @@ class Ui(pygame.sprite.Sprite):
         self.x_0=x
         self.y_0=y
         self.text=text
+        self.game = game
         self.image=pygame.image.load("assets/ui.png")
         self.image = pygame.transform.scale(self.image, (self.width, self.height)).convert_alpha()
         self.rect = self.image.get_rect()
@@ -24,7 +28,7 @@ class Ui(pygame.sprite.Sprite):
         self.hp='assets/hp1.png'
         self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (10, 30)).convert_alpha()
         self.image.blit(self.hp_image,(10,10))
-        self.timer(10000)
+        #self.timer(10000)
     def draw_text(self,display,x,y, width, height,text,width_carre,height_carre):
         if self.text != '':
             font = pygame.font.SysFont(pygame.font.get_default_font(),30)
@@ -42,14 +46,15 @@ class Ui(pygame.sprite.Sprite):
             if len(self.text_queue[k])+line<23:
                 line+=len(self.text_queue[k])
             else:
-                self.text.insert(k+decallage,'|')
+                self.text.insert(k+decallage, NEWLINE)
                 decallage += 1
                 line=0
         self.text_queue=self.text
         self.text_queue=" ".join(self.text_queue)
         self.text_queue=list(self.text_queue)
+
     def timer(self,time):
-        time=str(time)
+        time = str(time)
         font = pygame.font.SysFont(pygame.font.get_default_font(),30)
         time = font.render(time, 1, (0,0,0))
         self.image.blit(time,(50,10))
@@ -77,9 +82,25 @@ class Ui(pygame.sprite.Sprite):
             self.draw_rate=1
 
         elif self.keys[pygame.K_RETURN] and self.y>=550:
-            self.y=self.y_0
-            self.x=self.x_0
-            pygame.draw.rect(self.image, (255,255,255), pygame.Rect(self.x_0,self.y_0, self.width_carre, self.height_carre))
+            self.clear_text()
         else:
             self.draw_rate=0
-            
+
+        if self.game.slow_time >= 0:
+            self.time
+
+    def print(self, text_to_print, end = NEWLINE, clear = False):
+        """
+        Wrapper to print new text and end the text with end arg.
+        If clear == True: clear the actual text printed and print the new one.
+        """
+        self.clear_text()
+        self.text_queue = text_to_print + end
+        self.text_t()
+
+        print(text_to_print, end = end)
+        
+    def clear_text(self):
+        self.y=self.y_0
+        self.x=self.x_0
+        pygame.draw.rect(self.image, (255,255,255), pygame.Rect(self.x_0,self.y_0, self.width_carre, self.height_carre))

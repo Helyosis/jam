@@ -10,6 +10,9 @@ class Player(pygame.sprite.Sprite):
         self.WIDTH = 50
         self.HEIGHT = 70
 
+        self.remaining_health = 3
+        self.is_dead = False
+
         self.speed = 5
         self.jump_initial_speed = 15
         self.jump_time = 0
@@ -131,7 +134,7 @@ class Player(pygame.sprite.Sprite):
         The effect last for durations seconds. Must run in a separate thread to not block other processes
         duration: duration of the time slowing effect
         """
-        self.game.slow_time = True
+        self.game.slow_time = 5 * 60 #5 * 60 frames = 5 secondess
         print("Le ralentissement commence.")
         time.sleep(duration)
         self.game.slow_time = False
@@ -143,9 +146,20 @@ class Player(pygame.sprite.Sprite):
             self.dy -= force
             self.jump_time += 1
 
+    def damage(self, n):
+        self.remaining_health -= n
+        self.game.ui.print(f"OUCH ! -{n} dégats")
+        if self.remaining_health <= 0:
+            self.game.ui.print("Oh nan :( Te voilà décédé maintenant.")
+            self.is_dead = True
+
 
     def update(self):
-        self._handle_movement()
+        if not self.is_dead:
+            self._handle_movement()
         self._apply_gravity()
 
         self.move(self.dx, self.dy)
+
+        if self.game.slow_time >= 0:
+            self.game.slow_time -= 1
