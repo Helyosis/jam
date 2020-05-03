@@ -78,6 +78,10 @@ class Game:
         laser_shooter = LaserShooter(1400, 360, self, "UP", 10)
         laser_shooter.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
+        fake_block = Block(x = 20, y = 300, game = self, texture=(255,255,255, 100))
+        fake_block.add(self.all_sprites, self.all_game_objects, self.platforms)
+
+
     def scroll(self, dx = -1, dy = 0):
         """
         Move all sprites belonging to self.all_game_objects Group by applying their function force_move(dx)
