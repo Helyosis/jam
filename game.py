@@ -41,6 +41,8 @@ class Game:
         self.player_character = Player(50, 50, self)
         self.player_character.add(self.all_sprites, self.all_game_objects, self.characters)
 
+        self.initialize_level()
+        
         platform = Block(x = 380, y = 300, width=140, game = self)
         platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
