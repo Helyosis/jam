@@ -3,8 +3,8 @@ import pygame
 direction_to_degrees = {
     "UP": 0,
     "DOWN": 180,
-    "LEFT": -90,
-    "RIGHT": 90
+    "LEFT": 90,
+    "RIGHT": -90
 }
 
 class LaserShooter(pygame.sprite.Sprite):

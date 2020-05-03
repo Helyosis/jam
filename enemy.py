@@ -5,7 +5,7 @@ from bullet import Bullet
 from math import sqrt, ceil, atan2, pi, degrees
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, game, ground_sprite, aiming_time = 2 * 60):
+    def __init__(self, x, y, game, aiming_time = 2 * 60):
         """
         Coordinates provided are relative to the characters. Detection cone is added on the fly
         Aiming time is in frames

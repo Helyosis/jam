@@ -21,7 +21,9 @@ class Game:
         self.SCROLL_Y = 200
         self.x = self.y = 0
 
-        self.MAX_X = 2500
+        self.FLOOR_Y_LEVEL = 380
+        self.MAX_X = 5000
+        self.MAX_Y = 5000
 
         self.slow_time = -1
 
@@ -39,7 +41,7 @@ class Game:
 
         self.clock = pygame.time.Clock()
         
-        self.player_character = Player(50, 50, self)
+        self.player_character = Player(50, self.FLOOR_Y_LEVEL - 50, self)
         self.player_character.add(self.all_sprites, self.all_game_objects, self.characters)
 
         self.initialize_level()
@@ -52,9 +54,8 @@ class Game:
         self.game_song_slow= pygame.mixer.Sound("assets/music1.wav")
         self.game_song= pygame.mixer.Sound("assets/music0.wav")
         self.music()
-        self.score=0
-        coin = Coin(100,100,self)
-        coin.add(self.all_sprites, self.all_game_objects, self.projectiles)
+        self.score = 0
+
 
         self.fond_image=pygame.transform.scale(pygame.image.load("assets/fond.png"), (800, 350)).convert_alpha()
 
@@ -62,34 +63,54 @@ class Game:
         self.game_victoire_image=pygame.transform.scale(pygame.image.load("assets/victory.png"), (800, 600)).convert_alpha()
 
     def initialize_level(self):
-        floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
+        left_border = Block(x = -20, y = -3000, height = 3000 + self.FLOOR_Y_LEVEL, game =self)
+        left_border.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
+        right_border = Block(x = self.MAX_X, y = 3000, height = 3000, game =self)
+        right_border.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
+        floor = Block(x = 0, y = self.FLOOR_Y_LEVEL, width=self.MAX_X, game = self)
         floor.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
+        roof = Block(x = 0, y = 3000, width = self.MAX_X, game =self)
+        roof.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
-        platform = Block(x = 0, y = 200, width=140, game = self)
-        platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
-
+        """
         path = [(0, 1) for _ in range(400, 500)] + [(0, -1) for y in range(500, 400, -1)]
         moving_platform = Block(x = 1000, y = 300, width = 150, path = path, game = self, texture = (0, 0, 0))
         moving_platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
-        platform1 = Block(x = 1350, y = 100, game=self)
-        platform1.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
-        platform1 = Block(x = 1300, y = 200, game=self)
-        platform1.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
-        platform1 = Block(x = 1250, y = 300, game=self)
-        platform1.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
-        platform1 = Block(x = 1200, y = 360, game=self)
-        platform1.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
-
         enemy = Enemy(400, 250, self, platform)
         enemy.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.characters)
 
-        laser_shooter = LaserShooter(1400, 360, self, "UP", 10)
+        laser_shooter = LaserShooter(1400, 360, self, "RIGHT", 10)
         laser_shooter.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
-        fake_block = Block(x = 20, y = 300, game = self, texture=(255,255,255, 100))
+        fake_block = Block(x = 1000, y = -10, game = self, texture=(255,255,255, 100))
         fake_block.add(self.all_sprites, self.all_game_objects, self.platforms)
 
+        path = [(1, 0) for _ in range(100)] + [(-1, 0) for i in range(100)]
+        moving_platform = Block(x = 1000, y = 100, width = 150, path = path, game = self, texture = (0, 0, 0))
+        moving_platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
+        """
+
+        #1
+        self.add_block_wrapper(0, 200, width = 100)
+        self.add_enemy_wrapper(50, 250, aiming_time = 5)
+        self.add_coin(100, )
+
+        self.add_block_wrapper(900, 150, 40, 119)
+
+        
+
+    def add_block_wrapper(self, x, y, width = 20, height = 20, texture = (255, 255, 255), path = ()):
+        platform = Block(x = x, y = self.FLOOR_Y_LEVEL - y, width=width, height = height, game = self, texture=texture, path = path)
+        platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
+
+    def add_enemy_wrapper(self, x, y, aiming_time = 2):
+        enemy = Enemy(x=x, y=self.FLOOR_Y_LEVEL - y, game=self, aiming_time=aiming_time*60)
+        enemy.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.characters)
+
+    def add_coin_wrapper(self, x, y):
+        coin = Coin(x = x,y = self.FLOOR_Y_LEVEL - y, game = self)
+        coin.add(self.all_sprites, self.all_game_objects, self.projectiles)
 
     def scroll(self, dx = -1, dy = 0):
         """
