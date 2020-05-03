@@ -1,5 +1,4 @@
 import pygame
-<<<<<<< HEAD
 class Coin(pygame.sprite.Sprite):
     def __init__(self,x,y, game):
         super().__init__()
@@ -26,10 +25,3 @@ class Coin(pygame.sprite.Sprite):
 
         self.rect.x += dx
         self.rect.y += dy
-=======
-
-class Coin(pygame.sprite.Srite):
-    def __init__(self, x, y):
-        super().__init__()
-        
->>>>>>> 7cfd8b52f8c4330f524905c4b1ff2b4ee58b7246
