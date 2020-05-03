@@ -26,7 +26,7 @@ class Ui(pygame.sprite.Sprite):
         self.draw_rate=0
         self.nbchr=0
         self.hp='assets/hp3.png'
-        self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert_alpha()
+        self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert()
         self.image.blit(self.hp_image,(10,10))
         self.time_rate =0
         #self.timer(10000)
