@@ -166,3 +166,4 @@ class Player(pygame.sprite.Sprite):
 
         if self.game.slow_time >= 0:
             self.game.slow_time -= 1
+            self.game.ui.timer(self.game.slow_time)
