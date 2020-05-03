@@ -25,8 +25,8 @@ class Ui(pygame.sprite.Sprite):
         pygame.draw.rect(self.image, (255,255,255), pygame.Rect(self.x,self.y, width_carre, height_carre))
         self.draw_rate=0
         self.nbchr=0
-        self.hp='assets/hp1.png'
-        self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (10, 30)).convert_alpha()
+        self.hp='assets/hp3.png'
+        self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert_alpha()
         self.image.blit(self.hp_image,(10,10))
         #self.timer(10000)
     def draw_text(self,display,x,y, width, height,text,width_carre,height_carre):
@@ -37,6 +37,12 @@ class Ui(pygame.sprite.Sprite):
                 self.image.blit(text,(self.x+(self.width_carre/2 - text.get_width()/2)-240,self.y+(self.height_carre/2 - text.get_height()/2)-80))#240 80
                 #self.image.blit(text,(self.x-(self.width_carre/2 - text.get_width()/2),self.y-(self.height_carre/2 - text.get_height()/2)))
                 #self.display.blit(text,(0,0))
+    def print_hp(self, hp):
+        if hp>=0:
+            hp='assets/hp'+str(hp)+'.png'
+            self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert_alpha()
+            self.image.blit(self.hp_image,(10,10)) 
+
     def text_t(self):
         self.text_queue=self.text_queue.split(' ')
         self.text = list(self.text_queue)

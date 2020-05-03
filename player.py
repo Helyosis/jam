@@ -2,7 +2,7 @@ import pygame
 from utils import collided
 import math
 import threading, time
-
+from ui import Ui
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, game):
         super().__init__()
@@ -110,10 +110,10 @@ class Player(pygame.sprite.Sprite):
         colliding_sprites = pygame.sprite.spritecollide(self, self.colliding_with, False, collided)
         for sprite in colliding_sprites:
             if dx > 0 : # Moving right; Hit the left side of the sprite
-                self.rect.right = sprite.hitbox.left
+                self.rect.right += 1#sprite.hitbox.left
                 self.dx = 0
             if dx < 0: # Moving left; Hit the right side of the sprite
-                self.rect.left = sprite.hitbox.right
+                self.rect.left -= 1#sprite.hitbox.right                              ???tp ancienne position
                 self.dx = 0
             if dy > 0: # Moving down; Hit the top side of the sprite
                 self.rect.bottom = sprite.hitbox.top
@@ -149,6 +149,7 @@ class Player(pygame.sprite.Sprite):
     def damage(self, n):
         if n > 0:
             self.remaining_health -= n
+            Ui.print_hp(None,self.remaining_health) 
             self.game.ui.print(f"OUCH ! -{n} dégats")
             if self.remaining_health <= 0:
                 self.game.ui.print("Oh nan :( Te voilà décédé maintenant.")
