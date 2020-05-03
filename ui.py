@@ -51,7 +51,10 @@ class Ui(pygame.sprite.Sprite):
         decallage = 0
         for k in range(len(self.text_queue)):
             if len(self.text_queue[k])+line<23:
-                line+=len(self.text_queue[k])
+                if self.text_queue[k] != '|':
+                    line+=len(self.text_queue[k])
+                else:
+                    line=0
             else:
                 self.text.insert(k+decallage, NEWLINE)
                 decallage += 1
