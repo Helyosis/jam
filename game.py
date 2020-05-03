@@ -37,12 +37,15 @@ class Game:
         laser = Laser(300, 360, self)
         laser.add(self.platforms, self.all_game_objects, self.collide_with_player, self.all_sprites)
 
-        floor = Block(x = 0, y = 380, width=800)
+        floor = Block(x = 0, y = 380, width=800, game = self)
         floor.add(self.all_sprites, self.collide_with_player, self.platforms)
 
-        platform = Block(x = 380, y = 300, width=140)
+        platform = Block(x = 380, y = 300, width=140, game = self)
         platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
+        path = [(0, 1) for _ in range(400, 500)] + [(0, -1) for y in range(500, 400, -1)]
+        moving_platform = Block(x = 1000, y = 300, width = 150, path = path, game = self, texture = (0, 0, 0))
+        moving_platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
         enemy = Enemy(400, 250, self, platform)
         enemy.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.characters)

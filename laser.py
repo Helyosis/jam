@@ -22,6 +22,14 @@ class Laser(pygame.sprite.Sprite):
         self.time = 0
         self.game = game
 
+    def force_move(self, dx = 0, dy = 0):
+        """
+        Force the sprite to move. Used by the screen scroller usually.
+        """
+
+        self.rect.x += dx
+        self.rect.y += dy
+        
     def update(self):
         self.time+=1
         if self.time<=10:

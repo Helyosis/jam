@@ -86,7 +86,7 @@ class Player(pygame.sprite.Sprite):
                 slow_time_thread = threading.Thread(target=self.trigger_slow_time, args=(5,))
                 slow_time_thread.start()
 
-        if keys[pygame.K_KP6]:
+        if keys[pygame.K_KP6] or keys[pygame.K_d]:
             self.game.scroll(dx = -3)
 
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
@@ -159,6 +159,8 @@ class Player(pygame.sprite.Sprite):
         if not self.is_dead:
             self._handle_movement()
         self._apply_gravity()
+        if self.rect.bottom > 380:
+            self.rect.bottom = 380
 
         self.move(self.dx, self.dy)
 
