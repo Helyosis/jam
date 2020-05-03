@@ -8,6 +8,7 @@ from bullet import Bullet
 from laser import Laser
 import threading, time
 from laser import LaserShooter
+from coin import Coin
 class Game:
     #ralentire la music #TODO
     
@@ -76,6 +77,7 @@ class Game:
         self.music()
 
         self.score=0
+        Coin(100,100,self)
     def scroll(self, dx = -1, dy = 0):
         """
         Move all sprites belonging to self.all_game_objects Group by applying their function force_move(dx)
