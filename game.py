@@ -56,6 +56,8 @@ class Game:
         coin = Coin(100,100,self)
         coin.add(self.all_sprites, self.all_game_objects, self.projectiles)
 
+        self.fond_image=pygame.transform.scale(pygame.image.load("assets/fond.png"), (800, 350)).convert_alpha()
+
     def initialize_level(self):
         floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
         floor.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
@@ -112,7 +114,8 @@ class Game:
             self.all_sprites.draw(self.display)
 
             #Draw background
-            self.display.fill((0,255,0))
+            self.display.blit(self.fond_image, (0,50))
+            #self.display.fill((0,255,0))
 
             #Draw sprites, in respect of their layers
             for layer in self.layers_list:
