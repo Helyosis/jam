@@ -46,9 +46,10 @@ class LaserShooter(pygame.sprite.Sprite):
 
     def update(self):
         self.timer -= 1
+        """
         if self.timer == 2 * 60:
-            self.charging_sound.set_volume( (abs(self.rect.x - self.game.player_character.rect.x))/200)
-            self.charging_sound.play()
+            self.charging_sound.set_volume( 1 - round((abs(self.rect.x - self.game.player_character.rect.x))/1000, 1))
+            #self.charging_sound.play()"""
         if self.timer == 0:
             self.shoot_laser()
 
@@ -108,7 +109,7 @@ class Laser(pygame.sprite.Sprite):
 
     def spawn_laser(self):
         if self.remaining_laser > 0:
-            print(f"Il reste {self.remaining_laser} lasers à créer")
+            #print(f"Il reste {self.remaining_laser} lasers à créer")
             self.new_laser = Laser(self.rect.x + (self.dx * self.speed), self.rect.y + (self.dy * self.speed), self.direction, self, self.game, self.remaining_laser -1, self.damage)
         
     def try_kill(self):

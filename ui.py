@@ -43,7 +43,7 @@ class Ui(pygame.sprite.Sprite):
             self.hp='assets/hp'+str(hp)+'.png'
             self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert_alpha()
             self.image.blit(self.hp_image,(10,10)) 
-
+            
     def text_t(self):
         self.text_queue=self.text_queue.split(' ')
         self.text = list(self.text_queue)
