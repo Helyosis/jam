@@ -45,7 +45,7 @@ class Game:
         self.initialize_level()
 
         #texte = "Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués."
-        texte = "Bonjour.|Bonne chance"
+        texte = "Voix dans votre tête : Bonjour. Vous vous réveiller soudainement dans un laboratoire. Vous n’avez rien sur vous, mais soudain vous avez une envie incontrôlable de voler toutes les pièces. <ENTRER>| | (Pour vous déplacer vous pouvez utiliser les flèches du clavier, et la touche espace vous permet de ralentir le temps.) |Bonne chance"
         self.ui = Ui(self.display, self.width ,self.height,499,190,300,400, texte, self)
         self.ui.add(self.all_sprites, self.foreground)
 
