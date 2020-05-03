@@ -53,6 +53,7 @@ class Ui(pygame.sprite.Sprite):
         self.text_queue=" ".join(self.text_queue)
         self.text_queue=list(self.text_queue)
 
+
     def timer(self,time):
         time = str(time)
         font = pygame.font.SysFont(pygame.font.get_default_font(),30)
@@ -87,7 +88,8 @@ class Ui(pygame.sprite.Sprite):
             self.draw_rate=0
 
         if self.game.slow_time >= 0:
-            self.time
+            pass #J'ai cassé un truc sans faire exprès ?
+            #self.time
 
     def print(self, text_to_print, end = NEWLINE, clear = False):
         """

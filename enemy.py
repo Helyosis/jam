@@ -101,7 +101,7 @@ class Enemy(pygame.sprite.Sprite):
         return pygame.sprite.collide_mask(self, self.game.player_character) and not collided(self, self.game.player_character)
 
     def shoot(self, x, y):
-        theta = pi - atan2(y - self.hitbox.centery, x - self.hitbox.x)
+        theta =  pi - atan2(y - self.hitbox.centery, x - self.hitbox.x)
         print(theta)
         bullet = Bullet(self.hitbox.x, self.hitbox.centery, theta, self.game)
         bullet.add(self.game.all_sprites, self.game.all_game_objects, self.game.characters)
