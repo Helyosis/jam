@@ -55,12 +55,13 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += dy
 
     def move_one_axis(self, deltax, deltay):
-        if deltax != 0:
-            self.rect.x += min(self.MAX_DX, max(-self.MAX_DX, deltax))
-            #self.hitbox.x += min(self.MAX_DX, max(-self.MAX_DX, deltax))
         if deltay != 0:
             self.rect.y += deltay
             #self.hitbox.y += deltay
+        if deltax != 0:
+            self.rect.x += min(self.MAX_DX, max(-self.MAX_DX, deltax))
+            #if  self.game.MIN_X <=
+
 
         self._handle_collision(deltax, deltay)
 
@@ -109,12 +110,6 @@ class Player(pygame.sprite.Sprite):
     def _handle_collision(self, dx, dy):
         colliding_sprites = pygame.sprite.spritecollide(self, self.colliding_with, False, collided)
         for sprite in colliding_sprites:
-            if dx > 0 : # Moving right; Hit the left side of the sprite
-                self.rect.right = sprite.hitbox.left
-                self.dx = 0
-            if dx < 0: # Moving left; Hit the right side of the sprite
-                self.rect.left = sprite.hitbox.right
-                self.dx = 0
             if dy > 0: # Moving down; Hit the top side of the sprite
                 self.rect.bottom = sprite.hitbox.top
                 self.dy = 0
@@ -123,10 +118,18 @@ class Player(pygame.sprite.Sprite):
             if dy < 0: # Moving up; Hit the bottom side of the sprite
                 self.rect.top = sprite.hitbox.bottom
                 self.dy = 0
+
+            if dx > 0 : # Moving right; Hit the left side of the sprite
+                self.rect.right = sprite.hitbox.left
+                self.dx = 0
+            if dx < 0: # Moving left; Hit the right side of the sprite
+                self.rect.left = sprite.hitbox.right
+                self.dx = 0
         
 
     def _apply_gravity(self):
         self.dy += 1
+
 
     def trigger_slow_time(self, duration):
         """

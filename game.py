@@ -16,6 +16,9 @@ class Game:
         self.height = height
         self.display = display
 
+        self.MIN_X = 0
+        self.MAX_X = 1500
+
         self.slow_time = -1
 
         self.all_sprites = pygame.sprite.Group()
