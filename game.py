@@ -74,6 +74,8 @@ class Game:
         self.game_song_slow= pygame.mixer.Sound("assets/music1.wav")
         self.game_song= pygame.mixer.Sound("assets/music0.wav")
         self.music()
+
+        self.score=0
     def scroll(self, dx = -1, dy = 0):
         """
         Move all sprites belonging to self.all_game_objects Group by applying their function force_move(dx)
