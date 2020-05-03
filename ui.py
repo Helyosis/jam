@@ -71,7 +71,7 @@ class Ui(pygame.sprite.Sprite):
                     self.draw_text(self.display,self.x,self.y, self.width, self.height,self.text,self.width_carre,self.height_carre)
                     self.nbchr+=1
                     self.x+=13
-                else:
+                elif len(self.text_queue) > 0:
                     self.text = self.text_queue.pop(0)
                     self.y+=20
                     self.x=self.x_0

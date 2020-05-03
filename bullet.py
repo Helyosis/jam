@@ -27,11 +27,11 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.y = startY
 
     def update(self):
-        if self.game.slow_time and self.SPEED == 5:
+        if self.game.slow_time > 0 and self.SPEED == 5:
             self.SPEED = 1
             self.dx = math.cos(self.firing_angle) * self.SPEED * -1
             self.dy = math.sin(self.firing_angle) * self.SPEED
-        elif not self.game.slow_time and self.SPEED == 1:
+        elif not self.game.slow_time <= 0 and self.SPEED == 1:
             self.SPEED = 5
             self.dx = math.cos(self.firing_angle) * self.SPEED * -1
             self.dy = math.sin(self.firing_angle) * self.SPEED

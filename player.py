@@ -82,7 +82,7 @@ class Player(pygame.sprite.Sprite):
             new_direction = -1
 
         if pygame.K_SPACE in new_keys: #TODO: Create config file for keys changes
-            if not self.game.slow_time:
+            if self.game.slow_time <= 0:
                 slow_time_thread = threading.Thread(target=self.trigger_slow_time, args=(5,))
                 slow_time_thread.start()
 

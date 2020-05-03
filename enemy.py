@@ -107,7 +107,7 @@ class Enemy(pygame.sprite.Sprite):
         bullet.add(self.game.all_sprites, self.game.all_game_objects, self.game.characters)
 
     def update(self):
-        if (self.game.slow_time and self.counter == 0) or not self.game.slow_time:
+        if (self.game.slow_time > 0 and self.counter == 0) or self.game.slow_time <= 0:
             if self.is_shooting:
                 if self.is_aiming:
                     self._aim_with_cone(*self.game.player_character.rect.center)

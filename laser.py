@@ -1,17 +1,17 @@
 import pygame
 
 class Laser(pygame.sprite.Sprite):
-    def __init__(self,game):
+    def __init__(self, x, y, game):
         super().__init__()
-        self.width=20
-        self.height=60
-        self.speed=5
-        self.direction=1
+
+        self.WIDTH = 20
+        self.HEIGHT = 20
+
         self.image=pygame.image.load("assets/lasert.png")
-        self.image = pygame.transform.scale(self.image, (self.width, self.height)).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (self.WIDTH, self.HEIGHT)).convert_alpha()
         self.rect=self.image.get_rect()
-        self.rect.x=300
-        self.rect.y=300
+        self.rect.x = x
+        self.rect.y = x
         self.hitbox=self.rect
         self.time=0
         self.game=game
