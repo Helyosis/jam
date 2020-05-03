@@ -5,6 +5,8 @@ from enemy import Enemy
 from block import Block
 from ui import Ui
 from bullet import Bullet
+from laser import Laser
+import threading, time
 from laser import LaserShooter
 class Game:
     #ralentire la music #TODO
@@ -65,7 +67,11 @@ class Game:
         texte = "Bonjour.|Bonne chance"
         self.ui = Ui(self.display, self.width ,self.height,499,190,300,400, texte, self)
         self.ui.add(self.all_sprites, self.foreground)
-    
+
+        self.game_song_slow= pygame.mixer.Sound("assets/music1.wav")
+        self.game_song= pygame.mixer.Sound("assets/music0.wav")
+        self.music()
+
     def initialize_level(self):
         floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
         floor.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
@@ -105,6 +111,24 @@ class Game:
             #Refresh display and set FPS to 60
             pygame.display.flip()
             self.clock.tick(60)
+
+    def music(self):
+        pos=0
+        if self.slow_time<=0:
+            pos=pygame.mixer.music.get_pos()
+            self.game_song.play(-1,0,1000).set_volume(0.3)#,pos,2#nb rep, tmpmax,fondue 0->100s .set_volume(0.5)
+        else:
+            #pos=-1*pygame.mixer.music.get_pos()
+            self.game_song.stop()
+            self.game_song_slow.play(0,0,500)#0,int(pos*1.5),0
+            time_thread = threading.Thread(target=self.slow_music, args=(5,))
+            time_thread.start()
+            
+    def slow_music(self,tmp):
+        time.sleep(tmp)
+        #pos=pygame.mixer.music.get_pos()
+        self.game_song_slow.stop()
+        self.game_song.play(-1,0,1000).set_volume(0.3)#int(pos/1.5),2
 
 if __name__ == "__main__":
     pygame.init()

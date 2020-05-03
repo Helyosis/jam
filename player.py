@@ -93,6 +93,7 @@ class Player(pygame.sprite.Sprite):
             if self.game.slow_time <= 0:
                 slow_time_thread = threading.Thread(target=self.trigger_slow_time, args=(5,))
                 slow_time_thread.start()
+                self.game.music()
 
         if keys[pygame.K_KP6] or keys[pygame.K_d]:
             self.game.scroll(dx = -3)
