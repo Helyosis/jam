@@ -58,6 +58,9 @@ class Game:
 
         self.fond_image=pygame.transform.scale(pygame.image.load("assets/fond.png"), (800, 350)).convert_alpha()
 
+        self.game_over_image=pygame.transform.scale(pygame.image.load("assets/gameover.png"), (800, 600)).convert_alpha()
+        self.game_victoire_image=pygame.transform.scale(pygame.image.load("assets/victory.png"), (800, 600)).convert_alpha()
+
     def initialize_level(self):
         floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
         floor.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
@@ -102,13 +105,14 @@ class Game:
                 sprite.force_move(dx = dx, dy = dy)
 
     def run(self):
-        game_launched = True
-        while game_launched:
+        self.game_launched = True
+        while self.game_launched:
             #if pygame.event.get(pygame.MOUSEMOTION):
             #print(pygame.mouse.get_pos())
             if pygame.event.get(pygame.QUIT):
                 game_launched=False
-
+            if self.score>=6:
+                self.victory()
             #Game logic
             self.all_sprites.update()
             self.all_sprites.draw(self.display)
@@ -120,7 +124,6 @@ class Game:
             #Draw sprites, in respect of their layers
             for layer in self.layers_list:
                 layer.draw(self.display)
-
             #Refresh display and set FPS to 60
             pygame.display.flip()
             self.clock.tick(60)
@@ -142,7 +145,14 @@ class Game:
         #pos=pygame.mixer.music.get_pos()
         self.game_song_slow.stop()
         self.game_song.play(-1,0,1000).set_volume(0.3)#int(pos/1.5),2
-
+    def game_over(self):
+        self.display.blit(self.game_over_image,(100,100))
+        time.sleep(2)
+        self.game_launched=False
+    def victory(self):
+        self.display(self.game_victoire_image,(0,0))
+        time.sleep(2)
+        self.game_launched=False
 if __name__ == "__main__":
     pygame.init()
 
