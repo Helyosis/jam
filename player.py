@@ -2,7 +2,6 @@ import pygame
 from utils import collided
 import math
 import threading, time
-from ui import Ui
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, game):
         super().__init__()
@@ -149,7 +148,7 @@ class Player(pygame.sprite.Sprite):
     def damage(self, n):
         if n > 0:
             self.remaining_health -= n
-            Ui.print_hp(None,self.remaining_health) 
+            self.game.ui.print_hp(self.remaining_health) 
             self.game.ui.print(f"OUCH ! -{n} dégats")
             if self.remaining_health <= 0:
                 self.game.ui.print("Oh nan :( Te voilà décédé maintenant.")

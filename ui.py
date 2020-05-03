@@ -39,7 +39,7 @@ class Ui(pygame.sprite.Sprite):
                 #self.display.blit(text,(0,0))
     def print_hp(self, hp):
         if hp>=0:
-            hp='assets/hp'+str(hp)+'.png'
+            self.hp='assets/hp'+str(hp)+'.png'
             self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert_alpha()
             self.image.blit(self.hp_image,(10,10)) 
 
