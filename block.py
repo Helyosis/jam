@@ -42,3 +42,8 @@ class Block(pygame.sprite.Sprite):
         
         self.counter += 1
         self.counter = self.counter % 5
+
+class FakeBlock(Block):
+    def __init__(self, x = 0, y = 0, width = 20, height = 20, game = None, texture = (255,0,0)):
+        super().__init__(x, y, width, height, game, texture,path)
+        self.hitbox = pygame.Rect(self.x, self.rect.y, 0, 0) #Suppress the hitbox (can't just delete it but same effect)

@@ -5,13 +5,13 @@ from bullet import Bullet
 from math import sqrt, ceil, atan2, pi, degrees
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, game, ground_sprite):
+    def __init__(self, x, y, game, ground_sprite, aiming_time = 2 * 60):
         """
         Coordinates provided are relative to the characters. Detection cone is added on the fly
+        Aiming time is in frames
         """
         super().__init__()
         self.game = game
-        self.min_x, self.max_x = ground_sprite.rect.left, ground_sprite.rect.right
 
         self.CHAR_WIDTH, self.CHAR_HEIGHT = 50, 50
         self.CONE_WIDTH, self.CONE_HEIGHT = 100, 50
@@ -27,6 +27,7 @@ class Enemy(pygame.sprite.Sprite):
         self.counter = 0 #Used for slowing cone sweeping when self.game.slow_time == True
 
         self.is_shooting = False
+        self.aiming_time = aiming_time
 
         self.hitbox = self.character.get_rect()
         self.hitbox.x = x
@@ -130,14 +131,10 @@ class Enemy(pygame.sprite.Sprite):
 
             if self.detect_collision() and not self.is_shooting:
                 self.is_shooting = self.is_aiming = True
-                self.time = 60 * 5 #5 seconds
+                self.time = self.aiming_time
                 reload_sound = pygame.mixer.Sound('assets/reload.wav')
                 reload_sound.play()
                 self.cone = self.tube
-
-            if self.rect.right < self.max_x:
-                pass
-                #self.move_character(1)
 
         self.counter += 1
         self.counter = self.counter % 5

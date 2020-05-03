@@ -42,8 +42,21 @@ class Game:
         self.player_character.add(self.all_sprites, self.all_game_objects, self.characters)
 
         self.initialize_level()
-        
-        platform = Block(x = 380, y = 300, width=140, game = self)
+
+        #texte = "Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués."
+        texte = "Bonjour.|Bonne chance"
+        self.ui = Ui(self.display, self.width ,self.height,499,190,300,400, texte, self)
+        self.ui.add(self.all_sprites, self.foreground)
+
+        self.game_song_slow= pygame.mixer.Sound("assets/music1.wav")
+        self.game_song= pygame.mixer.Sound("assets/music0.wav")
+        self.music()
+
+    def initialize_level(self):
+        floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
+        floor.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
+
+        platform = Block(x = 0, y = 200, width=140, game = self)
         platform.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
         path = [(0, 1) for _ in range(400, 500)] + [(0, -1) for y in range(500, 400, -1)]
@@ -64,19 +77,6 @@ class Game:
 
         laser_shooter = LaserShooter(1400, 360, self, "UP", 10)
         laser_shooter.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
-
-        #texte = "Je crois que les filles m'aiment bien parceque je suis un peu mystérieux comme Light Yagami, je suis toujours tout seul, aux récrées je m’assoie sur un banc avec ma capuche et la tête baissé et quand quelque passe à coté de moi je chuchote des truc genre okamari no suzoki, ça ne veut rien dire mais ça fait mystique, les gens sont intrigués."
-        texte = "Bonjour.|Bonne chance"
-        self.ui = Ui(self.display, self.width ,self.height,499,190,300,400, texte, self)
-        self.ui.add(self.all_sprites, self.foreground)
-
-        self.game_song_slow= pygame.mixer.Sound("assets/music1.wav")
-        self.game_song= pygame.mixer.Sound("assets/music0.wav")
-        self.music()
-
-    def initialize_level(self):
-        floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
-        floor.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
 
     def scroll(self, dx = -1, dy = 0):
         """
