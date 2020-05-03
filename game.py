@@ -111,7 +111,11 @@ class Game:
         #2.5
         self.add_block_wrapper(1300, 600, 900, 40)
         self.add_block_wrapper(1300 + 900, 600, 100, 40, fake = True)
-        self.add_coin_wrapper()
+        self.add_coin_wrapper(2175, 540)
+        self.add_block_wrapper(1550, 320, 800, 40)
+        self.add_block_wrapper(1400, 320, 900, 40)
+        self.add_enemy_wrapper(1400, 370)
+        self.add_coin_wrapper(1550, 2150)
 
         #3
         self.add_block_wrapper(2300, 600, 80, 600-71)
@@ -124,6 +128,13 @@ class Game:
         self.add_block_wrapper(2600, 71, 80, 71, fake = True)
         self.add_block_wrapper(2700, 150, 80, 150-71)
         self.add_block_wrapper(2700, 71, 80, 71, fake = True)
+        self.add_coin_wrapper(self.MAX_X - 150, 150)
+
+        #4
+        path = [(0, 1) for _ in range(0,200)] + [(0, -1) for _ in range(0, 200)]
+        self.add_block_wrapper(2750, 600, 100, 80, texture = (255, 255, 0), path = path)
+        self.add_block_wrapper(2850, 800, self.MAX_X - 2850, 80)
+        self.add_laser_wrapper(2960, 900, "DOWN", max_length=100)
 
 
         
@@ -141,6 +152,9 @@ class Game:
     def add_coin_wrapper(self, x, y):
         coin = Coin(x = x,y = self.FLOOR_Y_LEVEL - y, game = self)
         coin.add(self.all_sprites, self.all_game_objects, self.projectiles)
+
+    def add_laser_wrapper(self, x, y, direction, max_length = 71, cooldown = 5 * 60):
+        laser = LaserShooter(x = x, y = y, game= self, direction = direction, max_length=max_length, damage = 1, cooldown=cooldown)
 
     def scroll(self, dx = -1, dy = 0):
         """

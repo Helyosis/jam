@@ -64,8 +64,8 @@ class Laser(pygame.sprite.Sprite):
         super().__init__()
 
         self.WIDTH = 20
-        self.HEIGHT = 10
-        self.speed = 10
+        self.HEIGHT = 1
+        self.speed = 1
         self.cooldown = 5
 
         self.is_dead = False
