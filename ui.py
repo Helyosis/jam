@@ -26,7 +26,7 @@ class Ui(pygame.sprite.Sprite):
         self.draw_rate=0
         self.nbchr=0
         self.hp='assets/hp3.png'
-        self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert_alpha()
+        self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert()
         self.image.blit(self.hp_image,(10,10))
         #self.timer(10000)
     def draw_text(self,display,x,y, width, height,text,width_carre,height_carre):
@@ -39,8 +39,9 @@ class Ui(pygame.sprite.Sprite):
                 #self.display.blit(text,(0,0))
     def print_hp(self, hp):
         if hp>=0:
-            hp='assets/hp'+str(hp)+'.png'
-            self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert_alpha()
+            self.hp='assets/hp'+str(hp)+'.png'
+            pygame.draw.rect(self.image, (255, 255, 255), [0, 0, 160, 60])
+            self.hp_image=pygame.transform.scale(pygame.image.load(self.hp), (150, 50)).convert()
             self.image.blit(self.hp_image,(10,10)) 
 
     def text_t(self):

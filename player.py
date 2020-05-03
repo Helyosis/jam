@@ -2,7 +2,7 @@ import pygame
 from utils import collided
 import math
 import threading, time
-from ui import Ui
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, game):
         super().__init__()
@@ -58,9 +58,13 @@ class Player(pygame.sprite.Sprite):
         if deltay != 0:
             self.rect.y += deltay
             #self.hitbox.y += deltay
+            if (deltay > 0 and self.rect.y > self.game.SCROLL_Y + 10) or (deltay < 0 and self.rect.y < self.game.SCROLL_Y - 10):
+                self.game.scroll(dy = -1 * deltay)
+
         if deltax != 0:
             self.rect.x += min(self.MAX_DX, max(-self.MAX_DX, deltax))
-            #if  self.game.MIN_X <=
+            if (deltax > 0 and self.rect.x > self.game.SCROLL_X + 10) or (deltax < 0 and self.rect.x < self.game.SCROLL_X - 10):
+                self.game.scroll(dx = -1 * min(self.MAX_DX, max(-self.MAX_DX, deltax)))
 
 
         self._handle_collision(deltax, deltay)
@@ -110,13 +114,14 @@ class Player(pygame.sprite.Sprite):
     def _handle_collision(self, dx, dy):
         colliding_sprites = pygame.sprite.spritecollide(self, self.colliding_with, False, collided)
         for sprite in colliding_sprites:
-            if dy > 0: # Moving down; Hit the top side of the sprite
-                self.rect.bottom = sprite.hitbox.top
+            if dy > 0 : # Moving down; Hit the top side of the sprite
+                self.rect.bottom = sprite.hitbox.top - 1
                 self.dy = 0
                 self.dx = int(self.dx / 2)
                 self.jump_time = 0
+
             if dy < 0: # Moving up; Hit the bottom side of the sprite
-                self.rect.top = sprite.hitbox.bottom
+                self.rect.top = sprite.hitbox.bottom - 1
                 self.dy = 0
 
             if dx > 0 : # Moving right; Hit the left side of the sprite
@@ -134,7 +139,8 @@ class Player(pygame.sprite.Sprite):
     def trigger_slow_time(self, duration):
         """
         Triggers the slowing time power of the Player. It slow every other objets (enemy, lasers, moving platforms...)
-        The effect last for durations seconds. Must run in a separate thread to not block other processes
+        The effect last for durations seconds.
+        Must run in a separate thread to not block other processes
         duration: duration of the time slowing effect
         """
         self.game.slow_time = 5 * 60 #5 * 60 frames = 5 secondess
@@ -150,21 +156,25 @@ class Player(pygame.sprite.Sprite):
             self.jump_time += 1
 
     def damage(self, n):
-        if n > 0:
+        if n > 0 and not self.is_dead:
             self.remaining_health -= n
-            Ui.print_hp(None,self.remaining_health) 
+            self.remaining_health = max(0, self.remaining_health)
+            self.game.ui.print_hp(self.remaining_health) 
             self.game.ui.print(f"OUCH ! -{n} dégats")
             if self.remaining_health <= 0:
                 self.game.ui.print("Oh nan :( Te voilà décédé maintenant.")
+                self.dx = self.dy =  0
                 self.is_dead = True
 
 
     def update(self):
         if not self.is_dead:
             self._handle_movement()
-        self._apply_gravity()
-        if self.rect.bottom > 380:
-            self.rect.bottom = 380
+            self.move(self.dx, self.dy)
+            self._apply_gravity()
+
+        if self.rect.bottom > 400:
+            self.damage(3)
 
         self.move(self.dx, self.dy)
 
