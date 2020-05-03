@@ -53,7 +53,8 @@ class Game:
         self.game_song= pygame.mixer.Sound("assets/music0.wav")
         self.music()
         self.score=0
-        Coin(100,100,self)
+        coin = Coin(100,100,self)
+        coin.add(self.all_sprites, self.all_game_objects, self.projectiles)
 
     def initialize_level(self):
         floor = Block(x = 0, y = 380, width=self.MAX_X, game = self)
@@ -80,6 +81,10 @@ class Game:
 
         laser_shooter = LaserShooter(1400, 360, self, "UP", 10)
         laser_shooter.add(self.all_sprites, self.all_game_objects, self.collide_with_player, self.platforms)
+
+        fake_block = Block(x = 20, y = 300, game = self, texture=(255,255,255, 100))
+        fake_block.add(self.all_sprites, self.all_game_objects, self.platforms)
+
 
     def scroll(self, dx = -1, dy = 0):
         """
